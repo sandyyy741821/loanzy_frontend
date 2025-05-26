@@ -38,7 +38,7 @@
       if (collegeName) params.append('collegeName', collegeName)
       if (type) params.append('type', type)
 
-      const response = await fetch(`https://your-worker-subdomain.workers.dev/api/search?${params}`)
+      const response = await fetch(`https://loanzy_api.santhosh-rv173.workers.dev/api/search?${params}`)
       const data = await response.json()
 
       const resultsDiv = document.getElementById('results')
