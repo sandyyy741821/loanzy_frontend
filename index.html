@@ -34,9 +34,9 @@
 
       const params = new URLSearchParams()
       if (idx) params.append('idx', idx)
-      if (val) params.append('val', val)
-      if (collegeName) params.append('collegeName', collegeName)
-      if (type) params.append('type', type)
+      if (val) params.append('&val', val)
+      if (collegeName) params.append('&collegeName', collegeName)
+      if (type) params.append('&type', type)
 
       const response = await fetch(`https://loanzy_api.santhosh-rv173.workers.dev/api/search?${params}`)
       const data = await response.json()
