@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Elasticsearch Search</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    input, select { margin: 5px; padding: 5px; }
+    button { padding: 5px 10px; }
+    #results { margin-top: 20px; }
+    .result { padding: 10px; border-bottom: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h2>Elasticsearch Search</h2>
+  <input type="number" id="idx" placeholder="Index (1-8)">
+  <input type="number" id="val" placeholder="Value">
+  <input type="text" id="collegeName" placeholder="College Name (optional)">
+  <select id="type">
+    <option value="">Type (optional)</option>
+    <option value="college">College</option>
+    <option value="course">Course</option>
+  </select>
+  <button onclick="search()">Search</button>
+
+  <div id="results"></div>
+
+  <script>
+    async function search() {
+      const idx = document.getElementById('idx').value
+      const val = document.getElementById('val').value
+      const collegeName = document.getElementById('collegeName').value
+      const type = document.getElementById('type').value
+
+      const params = new URLSearchParams()
+      if (idx) params.append('idx', idx)
+      if (val) params.append('val', val)
+      if (collegeName) params.append('collegeName', collegeName)
+      if (type) params.append('type', type)
+
+      const response = await fetch(`https://your-worker-subdomain.workers.dev/api/search?${params}`)
+      const data = await response.json()
+
+      const resultsDiv = document.getElementById('results')
+      resultsDiv.innerHTML = ''
+
+      if (data.error) {
+        resultsDiv.innerHTML = `<p style="color:red;">Error: ${data.error}</p>`
+      } else if (data.length === 0) {
+        resultsDiv.innerHTML = '<p>No results found.</p>'
+      } else {
+        data.forEach(item => {
+          const div = document.createElement('div')
+          div.className = 'result'
+          div.innerHTML = `<strong>${item.source.Name}</strong> (Score: ${item.score})<br>Type: ${item.source.Type}<br>CREDLEV_${idx}: ${item.source[`CREDLEV_${idx}`]}`
+          resultsDiv.appendChild(div)
+        })
+      }
+    }
+  </script>
+</body>
+</html>
