@@ -6,7 +6,7 @@ export async function onRequestPost({ request }) {
     return new Response('Captcha missing!', { status: 400 });
   }
 
-  const secret = '0x4AAAAAABet_X5Bz4qcjsrfhEgeEFrrFlA'; 
+  const secret = '0x4AAAAAABet_X5Bz4qcjsrfhEgeEFrrF'; 
   const verifyResponse = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
