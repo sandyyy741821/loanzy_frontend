@@ -8,7 +8,6 @@
 <body>
   <h2>Turnstile CAPTCHA Test</h2>
 
-  <!-- Turnstile widget -->
   <div class="cf-turnstile" data-sitekey="0x4AAAAAABet_YrZDjLmY4xM" data-callback="onCaptchaSuccess"></div>
 
   <br />
@@ -20,7 +19,6 @@
   <script>
     let captchaToken = '';
 
-    // This function is called automatically when the Turnstile is completed
     function onCaptchaSuccess(token) {
       captchaToken = token;
       document.getElementById('result').textContent = 'Captcha completed. You can submit.';
@@ -32,7 +30,7 @@
         return;
       }
 
-      const response = await fetch('https://captcha_verification.santhosh-rv173.workers.dev', {
+      const response = await fetch('https://captcha-verification.santhosh-rv173.workers.dev', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: captchaToken })
@@ -46,8 +44,8 @@
         document.getElementById('result').textContent = 'Captcha verification failed!';
       }
 
-      captchaToken = ''; // Reset token
-      turnstile.reset(); // Reset the captcha widget
+      captchaToken = '';
+      turnstile.reset(); 
     });
   </script>
 </body>
