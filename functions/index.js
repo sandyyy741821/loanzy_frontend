@@ -13,12 +13,18 @@ export async function onRequestPost({ request }) {
     body: new URLSearchParams({
       secret: secret,
       response: token
-    })
+    }),
   });
 
   const verifyResult = await verifyResponse.json();
+
   if (verifyResult.success) {
-    return new Response('Captcha Passed!', { status: 200 });
+    return new Response(null, {
+      status: 302,
+      headers: {
+        'Location': '/',
+      },
+    });
   } else {
     return new Response('Captcha Failed!', { status: 400 });
   }
